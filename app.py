@@ -31,7 +31,7 @@ def webhook():
         print("Authentication successful!")
         
         # Open your sheet by ID
-        sheet_id = '1yGBz02r5zD_wW5aD5SnwXrwJr-Dq2f5P8ytlEgHlp2w'
+        sheet_id = '15KZHfBebHCWkmajKKONxJdN1zL0Wl2Q9ZVdk_J8f9oo'
         print(f"Opening sheet with ID: {sheet_id}")
         spreadsheet = client.open_by_key(sheet_id)
         print(f"Spreadsheet opened: {spreadsheet.title}")
