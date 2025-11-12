@@ -26,10 +26,18 @@ def webhook():
     
     try:
         # Get Google Sheets client
+        print("Authenticating with Google...")
         client = get_sheets_client()
+        print("Authentication successful!")
         
         # Open your sheet by ID
-        sheet = client.open_by_key('1yGBz02r5zD_wW5aD5SnwXrwJr-Dq2f5P8ytlEgHlp2w').sheet1
+        sheet_id = '1yGBz02r5zD_wW5aD5SnwXrwJr-Dq2f5P8ytlEgHlp2w'
+        print(f"Opening sheet with ID: {sheet_id}")
+        spreadsheet = client.open_by_key(sheet_id)
+        print(f"Spreadsheet opened: {spreadsheet.title}")
+        
+        sheet = spreadsheet.sheet1
+        print(f"Accessing worksheet: {sheet.title}")
         
         # Extract relevant data from webhook
         conversation_data = data.get('data', {})
@@ -54,11 +62,15 @@ def webhook():
             summary,
             call_duration
         ]
+        
+        print(f"Appending row to sheet...")
         sheet.append_row(row)
         
         print("Successfully wrote to Google Sheets!")
         
     except Exception as e:
-        print(f"Error writing to Google Sheets: {e}")
+        print(f"Error writing to Google Sheets: {type(e).__name__}: {str(e)}")
+        import traceback
+        print(traceback.format_exc())
     
     return jsonify({"status": "ok"}), 200
